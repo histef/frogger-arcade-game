@@ -18,7 +18,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
 //TODO: updates enemy location and handles collision with Player
-    this.x += Math.random()*(Math.random()*10); //changes speed of bugs
+    this.x += Math.floor(Math.random()*(Math.random()*10)); //changes speed of bugs
     if(this.x > 525){
         this.x = -100;
     }
@@ -50,10 +50,10 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyCode){
 //TODO: move to the next grid decided by user. can't go off-screen
     if (keyCode === 'left' && this.x > 0){
-        this.x -= 50;
+        this.x -= 100;
         console.log(this.x);
     } else if (keyCode === 'right' && this.x < 400){
-        this.x += 50;
+        this.x += 100;
         console.log(this.x);
     } else if (keyCode === 'up' && this.y > 0){
         this.y -= 50;
@@ -75,7 +75,7 @@ Player.prototype.handleInput = function(keyCode){
 
 // Now instantiate your objects.
 //TODO: Place all enemy objects in an array called allEnemies (destructure?)
-const enemyYPosition = [40, 40, 140, 240, 240];
+const enemyYPosition = [60, 60, 140, 220, 220];
 const allEnemies = [];
 enemyYPosition.forEach(function(e){
     let enemy = new Enemy();
@@ -88,7 +88,7 @@ const player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keydown', function(e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
