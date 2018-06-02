@@ -56,10 +56,10 @@ Player.prototype.handleInput = function(keyCode){
         this.x += 100;
         console.log(this.x);
     } else if (keyCode === 'up' && this.y > 0){
-        this.y -= 50;
+        this.y -= 60;
         console.log(this.y);
     } else if (keyCode === 'down' && this.y < 400){
-        this.y += 50;
+        this.y += 60;
         console.log(this.y);
     }
 
