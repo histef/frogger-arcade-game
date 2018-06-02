@@ -6,7 +6,8 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-//TODO: enemy location and speed goes here
+//TODO: enemy initial location and speed goes here
+    this.x = Math.random()*250;
 };
 
 // Update the enemy's position, required method for game
@@ -17,9 +18,13 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
 //TODO: updates enemy location and handles collision with Player
+    this.x += Math.random()*(Math.random()*10); //changes speed of bugs
+    if(this.x > 525){
+        this.x = -100;
+    }
 };
 
-// Draw the enemy on the screen, required method for game
+// Draw the Enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -27,7 +32,7 @@ Enemy.prototype.render = function() {
 // Initiate Player class
 let Player = function() {
     this.sprite = 'images/char-horn-girl.png';
-//TODO: set Player's initial location
+//set Player's initial location
     this.x = 200;
     this.y = 400; 
 };
@@ -35,21 +40,48 @@ let Player = function() {
 // This class requires an update(), render() and
 Player.prototype.update = function(dt) {
 //TODO: updates player location and handles collision
+
 }
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 // a handleInput() method.
-Player.prototype.handleInput = function(){
-//TODO: move to the next grid decided by user. can't do off-screen
+Player.prototype.handleInput = function(keyCode){
+//TODO: move to the next grid decided by user. can't go off-screen
+    if (keyCode === 'left' && this.x > 0){
+        this.x -= 50;
+        console.log(this.x);
+    } else if (keyCode === 'right' && this.x < 400){
+        this.x += 50;
+        console.log(this.x);
+    } else if (keyCode === 'up' && this.y > 0){
+        this.y -= 50;
+        console.log(this.y);
+    } else if (keyCode === 'down' && this.y < 400){
+        this.y += 50;
+        console.log(this.y);
+    }
+
+    //win mode, when player reaches water, reset to initial position
+    if (this.y === 0){
+        this.x = 200;
+        this.y = 400;
+        //add point pop up
+    }
 }
 
 //When player reaches water, reset to initial location
 
 // Now instantiate your objects.
 //TODO: Place all enemy objects in an array called allEnemies (destructure?)
+const enemyYPosition = [40, 40, 140, 240, 240];
 const allEnemies = [];
+enemyYPosition.forEach(function(e){
+    let enemy = new Enemy();
+    enemy.y = e;
+    allEnemies.push(enemy);
+});
 // Place the player object in a variable called player
 const player = new Player();
 
