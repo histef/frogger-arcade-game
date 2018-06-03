@@ -1,10 +1,5 @@
 // Enemies our player must avoid
 var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 //TODO: enemy initial location and speed goes here
     this.x = Math.random()*250;
@@ -24,7 +19,7 @@ Enemy.prototype.update = function(dt) {
     }
 };
 
-// Draw the Enemy on the screen, required method for game
+// Draw the Enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
@@ -37,16 +32,18 @@ let Player = function() {
     this.y = 400; 
 };
 
-// This class requires an update(), render() and
 Player.prototype.update = function(dt) {
 //TODO: updates player location and handles collision
-
+/*    if(this.x && this.y === enemy.x && enemy.y){
+        this.x = 200;
+        this.y = 400; 
+    }*/
 }
 
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-// a handleInput() method.
+
 Player.prototype.handleInput = function(keyCode){
 //TODO: move to the next grid decided by user. can't go off-screen
     if (keyCode === 'left' && this.x > 0){
@@ -64,30 +61,27 @@ Player.prototype.handleInput = function(keyCode){
     }
 
     //win mode, when player reaches water, reset to initial position
-    if (this.y === 0){
+    if (this.y < 0){
         this.x = 200;
         this.y = 400;
-        //add point pop up
+        //add point pop up ()
     }
 }
 
-//When player reaches water, reset to initial location
-
-// Now instantiate your objects.
-//TODO: Place all enemy objects in an array called allEnemies (destructure?)
+//Instantiate your objects.
+//Place all enemy objects in an array called allEnemies
 const enemyYPosition = [60, 60, 140, 220, 220];
 const allEnemies = [];
-enemyYPosition.forEach(function(e){
+enemyYPosition.forEach(function(en){
     let enemy = new Enemy();
-    enemy.y = e;
+    enemy.y = en;
     allEnemies.push(enemy);
 });
-// Place the player object in a variable called player
+// Instantiate player
 const player = new Player();
 
-
 // This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// Player.handleInput() method.
 document.addEventListener('keydown', function(e) {
     var allowedKeys = {
         37: 'left',
@@ -96,7 +90,7 @@ document.addEventListener('keydown', function(e) {
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
 
 
