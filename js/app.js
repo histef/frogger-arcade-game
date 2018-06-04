@@ -12,8 +12,8 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-//TODO: updates enemy location and handles collision with Player
-    this.x += Math.floor(Math.random()*(7 - 1)+1);
+//updates enemy location and handles collision with Player
+    this.x += Math.floor(Math.random()*(15 - 1)+2);
     /*console.log(`${this.y} , ${this.x}`) *///changes speed of bugs
     if(this.x > 525){
         this.x = Math.floor(Math.random()*-400);
@@ -29,10 +29,22 @@ Enemy.prototype.checkCollisions = function(){
         (this.x > 120 && this.x < 220) && player.x === 200 ||
         (this.x > 220 && this.x < 320) && player.x === 300 ||
         (this.x > 320 && this.x < 420) && player.x === 400){
-        player.x = 200;
-        player.y = 400;
+//disable keystrokes??
+            player.x = 200;
+            player.y = 400;
+            this.collisionMessage();
     }
     }
+}
+
+Enemy.prototype.collisionMessage = function(){
+        const collisionPopover = document.querySelector('.collision-popover');
+        collisionPopover.style.display = 'inline';
+        setTimeout(function(){
+            collisionPopover.style.display = 'none';
+        }, 500)
+
+
 }
 
 // Draw the Enemy on the screen
@@ -72,22 +84,26 @@ Player.prototype.handleInput = function(keyCode){
         this.y += 85;
         console.log(this.y);
     }
-
     //win mode, when player reaches water, reset to initial position
     if (this.y < 0){
         this.x = 200;
         this.y = 400;
         this.winMessage();
-/* what to bind this too here??
-        setTimeout(function(){
-        this.x = 200;
-        this.y = 400;
-    }, 100);
-*/
-        //add point pop up using css, hidden until win, transition time to grow
         //increase enemy speed function()
     }
 }
+
+//Win functionality
+Player.prototype.winMessage = function(){
+    const messages = ['You did it!', 'Great job!', 'Killer move!'];
+    const winPopover = document.querySelector('.win-popover');
+    winPopover.textContent = messages[Math.floor(Math.random()*messages.length)];
+    winPopover.style.display = "inline";
+    setTimeout(function(){
+        winPopover.style.display = "none";
+    }, 1000);
+};
+
 
 //Instantiate your objects.
 //Place all enemy objects in an array called allEnemies
@@ -101,9 +117,10 @@ enemyYPosition.forEach(function(en){
 // Instantiate player
 const player = new Player();
 
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method.
-document.addEventListener('keydown', function(e) {
+const keyPress = document.addEventListener('keydown', function(e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
@@ -114,15 +131,3 @@ document.addEventListener('keydown', function(e) {
     player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
 
-
-//TODO: win functionality
-
-Player.prototype.winMessage = function(){
-    const messages = ['You did it!', 'Great job!', 'Killer move!'];
-    const winPopover = document.querySelector('.win-popover');
-    winPopover.textContent = messages[Math.floor(Math.random()*messages.length)];
-    winPopover.style.display = "inline";
-    setTimeout(function(){
-        winPopover.style.display = "none";
-    }, 1000);
-};
