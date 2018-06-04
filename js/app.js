@@ -24,11 +24,11 @@ Enemy.prototype.update = function(dt) {
 //checks collision
 Enemy.prototype.checkCollisions = function(){
     if(this.y === player.y){
-        if((this.x >= 0 && this.x < 20) && player.x === 0|| 
-        (this.x > 80 && this.x < 100) && player.x === 100 ||
-        (this.x > 120 && this.x < 200) && player.x === 200 ||
-        (this.x > 220 && this.x < 300) && player.x === 300 ||
-        (this.x > 320 && this.x < 400) && player.x === 400){
+        if((this.x >= -15 && this.x < 20) && player.x === 0|| 
+        (this.x > 60 && this.x < 120) && player.x === 100 ||
+        (this.x > 120 && this.x < 220) && player.x === 200 ||
+        (this.x > 220 && this.x < 320) && player.x === 300 ||
+        (this.x > 320 && this.x < 420) && player.x === 400){
         player.x = 200;
         player.y = 400;
     }
@@ -77,14 +77,14 @@ Player.prototype.handleInput = function(keyCode){
     if (this.y < 0){
         this.x = 200;
         this.y = 400;
-
+        this.winMessage();
 /* what to bind this too here??
         setTimeout(function(){
         this.x = 200;
         this.y = 400;
     }, 100);
 */
-        //add point pop up ()
+        //add point pop up using css, hidden until win, transition time to grow
         //increase enemy speed function()
     }
 }
@@ -116,3 +116,13 @@ document.addEventListener('keydown', function(e) {
 
 
 //TODO: win functionality
+
+Player.prototype.winMessage = function(){
+    const messages = ['You did it!', 'Great job!', 'Killer move!'];
+    const winPopover = document.querySelector('.win-popover');
+    winPopover.textContent = messages[Math.floor(Math.random()*messages.length)];
+    winPopover.style.display = "inline";
+    setTimeout(function(){
+        winPopover.style.display = "none";
+    }, 1000);
+};
