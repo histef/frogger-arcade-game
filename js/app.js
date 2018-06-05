@@ -3,7 +3,7 @@ var Enemy = function() {
     this.sprite = 'images/enemy-bug.png';
 //enemy initial location and speed
     this.x = Math.floor(Math.random()*-400);
-    this.speed = Math.floor(Math.random()*(13 - 1)+2);
+    this.speed = Math.floor(Math.random()*(250 - 25)+25);
 };
 
 // Update the enemy's position, required method for game
@@ -14,7 +14,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
 //updates enemy location and handles collision with Player
-    this.x += this.speed *dt * 20;
+    this.x += this.speed *dt;
     /*console.log(`${this.y} , ${this.x}`) *///changes speed of bugs
     if(this.x > 525){
         this.x = Math.floor(Math.random()*-400);
