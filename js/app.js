@@ -1,8 +1,9 @@
 // Enemies our player must avoid
 var Enemy = function() {
     this.sprite = 'images/enemy-bug.png';
-//TODO: enemy initial location and speed goes here
+//enemy initial location and speed
     this.x = Math.floor(Math.random()*-400);
+    this.speed = Math.floor(Math.random()*(13 - 1)+2);
 };
 
 // Update the enemy's position, required method for game
@@ -13,7 +14,7 @@ Enemy.prototype.update = function(dt) {
     // all computers.
 
 //updates enemy location and handles collision with Player
-    this.x += Math.floor(Math.random()*(15 - 1)+2);
+    this.x += this.speed *dt * 20;
     /*console.log(`${this.y} , ${this.x}`) *///changes speed of bugs
     if(this.x > 525){
         this.x = Math.floor(Math.random()*-400);
@@ -29,7 +30,6 @@ Enemy.prototype.checkCollisions = function(){
         (this.x > 120 && this.x < 220) && player.x === 200 ||
         (this.x > 220 && this.x < 320) && player.x === 300 ||
         (this.x > 320 && this.x < 420) && player.x === 400){
-//disable keystrokes??
             player.x = 200;
             player.y = 400;
             this.collisionMessage();
@@ -43,8 +43,6 @@ Enemy.prototype.collisionMessage = function(){
         setTimeout(function(){
             collisionPopover.style.display = 'none';
         }, 500)
-
-
 }
 
 // Draw the Enemy on the screen
