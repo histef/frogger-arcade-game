@@ -15,7 +15,6 @@ Enemy.prototype.update = function(dt) {
 
 //updates enemy location and handles collision with Player
     this.x += this.speed *dt;
-    /*console.log(`${this.y} , ${this.x}`) *///changes speed of bugs
     if(this.x > 525){
         this.x = Math.floor(Math.random()*-400);
     }
@@ -87,6 +86,7 @@ Player.prototype.handleInput = function(keyCode){
         this.x = 200;
         this.y = 400;
         this.winMessage();
+        this.scoreBoard();
         //increase enemy speed function()
     }
 }
@@ -102,6 +102,13 @@ Player.prototype.winMessage = function(){
     }, 1000);
 };
 
+//Scoreboard
+let scoreCount = 0;
+Player.prototype.scoreBoard = function(){
+    const score = document.querySelector('.score');
+    scoreCount += 50;
+    score.textContent = scoreCount;
+}
 
 //Instantiate your objects.
 //Place all enemy objects in an array called allEnemies
