@@ -5,9 +5,19 @@
     <title>Frogger Game</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Anaheim" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="score-board">Score: <span class="score">0</span></div>
+	<div class="score-board">
+		<div>Score: <span class="score">0</span></div>
+		<div class="lives">
+			<ul>
+				<li><i class="fas fa-female"></i></li>
+				<li><i class="fas fa-female"></i></li>
+				<li><i class="fas fa-female"></i></li>
+		</div>
+	</div>
+
 	<div class="win-popover"></div>
 	<div class="collision-popover">Ouch!!</div>
     <script src="js/resources.js"></script>
