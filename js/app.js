@@ -114,16 +114,16 @@ Player.prototype.handleInput = function(keyCode){
 //TODO: move to the next grid decided by user. can't go off-screen
     if (keyCode === 'left' && this.x > 0){
         this.x -= 100;
-        //console.log(this.x);
+        console.log(this.x);
     } else if (keyCode === 'right' && this.x < 400){
         this.x += 100;
-        //console.log(this.x);
+        console.log(this.x);
     } else if (keyCode === 'up' && this.y > 0){
         this.y -= 85;
-        //console.log(this.y);
+        console.log(this.y);
     } else if (keyCode === 'down' && this.y < 400){
         this.y += 85;
-        //console.log(this.y);
+        console.log(this.y);
     }
     //win mode, when player reaches water, reset to initial position
     if (this.y < 0){
@@ -180,3 +180,23 @@ const keyPress = document.addEventListener('keydown', function(e) {
     player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
 
+let Jewel = function() {
+    const jewelList = ['images/Gem-Blue.png', 'images/Gem-Green.png', 'images/Gem-Orange.png'];
+    this.sprite = jewelList[Math.floor(Math.random() * jewelList.length)];
+//set Jewels initial location
+    this.x = Math.floor(Math.random() * (400 - 0) + 0);
+    console.log(this.x);
+    this.y = Math.floor(Math.random() * (250 - 60) + 60);
+    console.log(this.y);
+};
+
+Jewel.prototype.update = function(dt) {
+//TODO: updates jewels location and handles collision
+
+}
+
+Jewel.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+const jewel = new Jewel();
