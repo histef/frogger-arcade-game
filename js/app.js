@@ -39,9 +39,23 @@ Enemy.prototype.checkCollisions = function(){
             document.querySelector('li').outerHTML = "";
         } else {
             this.gameOver();
+            this.reset();
         }
     }
     }
+}
+
+Enemy.prototype.reset = function(){
+    setTimeout(function(){
+    playerCount = 3;
+    scoreCount = 0;
+    score.textContent = scoreCount;
+    document.querySelector('ul').innerHTML = 
+        `<li><i class="fas fa-female"></i></li>
+         <li><i class="fas fa-female"></i></li>
+         <li><i class="fas fa-female"></i></li>`
+}, 2000);
+
 }
 
 Enemy.prototype.collisionMessage = function(){
@@ -52,10 +66,32 @@ Enemy.prototype.collisionMessage = function(){
         }, 500)
 }
 
+// Game over modal
+Enemy.prototype.gameOver = function(){
+    const gameOverModal = document.querySelector('#game-over-modal');
+    gameOverModal.style.display = "block";
+    const finalscore = document.querySelector('.modal-score');
+    finalscore.textContent = `Score: ${scoreCount}`;
+
+// Get the <span> element that closes the modal
+    const span = document.getElementsByClassName("close")[0];
+    span.onclick = function() {
+    gameOverModal.style.display = "none";
+    }
+
+// When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == gameOverModal) {
+        gameOverModal.style.display = "none";
+        }
+    }
+}
+
 // Draw the Enemy on the screen
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
 
 // Initiate Player class
 let Player = function() {
@@ -112,8 +148,8 @@ Player.prototype.winMessage = function(){
 
 //Scoreboard
 let scoreCount = 0;
+const score = document.querySelector('.score');
 Player.prototype.scoreBoard = function(){
-    const score = document.querySelector('.score');
     scoreCount += 50;
     score.textContent = scoreCount;
 }
@@ -144,23 +180,3 @@ const keyPress = document.addEventListener('keydown', function(e) {
     player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
 
-// Get the modal
-Enemy.prototype.gameOver = function(){
-var gameOverModal = document.querySelector('#game-over-modal');
-    gameOverModal.style.display = "block";
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    gameOverModal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == gameOverModal) {
-        gameOverModal.style.display = "none";
-        }
-    }
-}
