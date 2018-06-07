@@ -22,6 +22,7 @@ Enemy.prototype.update = function(dt) {
 };
 
 //checks collision
+let playerCount = 3;
 Enemy.prototype.checkCollisions = function(){
     if(this.y === player.y){
         if((this.x >= -15 && this.x < 20) && player.x === 0|| 
@@ -32,6 +33,13 @@ Enemy.prototype.checkCollisions = function(){
             player.x = 200;
             player.y = 400;
             this.collisionMessage();
+         if(playerCount > 0){   
+            playerCount--;
+            console.log(playerCount);
+            document.querySelector('li').outerHTML = "";
+        } else {
+            this.gameOver();
+        }
     }
     }
 }
@@ -70,16 +78,16 @@ Player.prototype.handleInput = function(keyCode){
 //TODO: move to the next grid decided by user. can't go off-screen
     if (keyCode === 'left' && this.x > 0){
         this.x -= 100;
-        console.log(this.x);
+        //console.log(this.x);
     } else if (keyCode === 'right' && this.x < 400){
         this.x += 100;
-        console.log(this.x);
+        //console.log(this.x);
     } else if (keyCode === 'up' && this.y > 0){
         this.y -= 85;
-        console.log(this.y);
+        //console.log(this.y);
     } else if (keyCode === 'down' && this.y < 400){
         this.y += 85;
-        console.log(this.y);
+        //console.log(this.y);
     }
     //win mode, when player reaches water, reset to initial position
     if (this.y < 0){
@@ -136,3 +144,23 @@ const keyPress = document.addEventListener('keydown', function(e) {
     player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
 
+// Get the modal
+Enemy.prototype.gameOver = function(){
+var gameOverModal = document.querySelector('#game-over-modal');
+    gameOverModal.style.display = "block";
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    gameOverModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == gameOverModal) {
+        gameOverModal.style.display = "none";
+        }
+    }
+}

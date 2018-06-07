@@ -12,14 +12,25 @@
 		<div>Score: <span class="score">0</span></div>
 		<div class="lives">
 			<ul>
-				<li><i class="fas fa-female"></i></li>
-				<li><i class="fas fa-female"></i></li>
-				<li><i class="fas fa-female"></i></li>
+				<li class="live1"><i class="fas fa-female"></i></li>
+				<li class="live2"><i class="fas fa-female"></i></li>
+				<li class="live3"><i class="fas fa-female"></i></li>
 		</div>
 	</div>
-
 	<div class="win-popover"></div>
-	<div class="collision-popover">Ouch!!</div>
+	<div class="collision-popover">Ouch!!</div>	
+	
+<!-- The Modal -->
+	<div id="game-over-modal" class="modal">
+
+	  <!-- Modal content -->
+	  <div class="modal-content">
+	    <span class="close">&times;</span>
+	    <p>Game Over. Great job!</p>
+	  </div>
+
+	</div>
+
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
