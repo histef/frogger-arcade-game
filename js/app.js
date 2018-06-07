@@ -181,7 +181,7 @@ const keyPress = document.addEventListener('keydown', function(e) {
 });
 
 let Jewel = function() {
-    const jewelList = ['images/Gem-Blue.png', 'images/Gem-Green.png', 'images/Gem-Orange.png'];
+    const jewelList = ['images/Gem Blue.png', 'images/Gem Green.png', 'images/Gem Orange.png'];
     this.sprite = jewelList[Math.floor(Math.random() * jewelList.length)];
 //set Jewels initial location
     this.x = Math.floor(Math.random() * (400 - 0) + 0);
@@ -196,7 +196,7 @@ Jewel.prototype.update = function(dt) {
 }
 
 Jewel.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 52, 88);
 };
 
 const jewel = new Jewel();
