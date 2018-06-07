@@ -25,11 +25,11 @@ Enemy.prototype.update = function(dt) {
 let playerCount = 3;
 Enemy.prototype.checkCollisions = function(){
     if(this.y === player.y){
-        if((this.x >= -15 && this.x < 20) && player.x === 0|| 
-        (this.x > 60 && this.x < 120) && player.x === 100 ||
-        (this.x > 120 && this.x < 220) && player.x === 200 ||
-        (this.x > 220 && this.x < 320) && player.x === 300 ||
-        (this.x > 320 && this.x < 420) && player.x === 400){
+        if((this.x >= -15 && this.x < 40) && player.x === 0|| 
+        (this.x > 50 && this.x < 140) && player.x === 100 ||
+        (this.x > 150 && this.x < 240) && player.x === 200 ||
+        (this.x > 250 && this.x < 340) && player.x === 300 ||
+        (this.x > 350 && this.x < 440) && player.x === 400){
             player.x = 200;
             player.y = 400;
             this.collisionMessage();
