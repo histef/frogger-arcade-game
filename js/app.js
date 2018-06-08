@@ -103,7 +103,7 @@ let Player = function() {
 
 Player.prototype.update = function(dt) {
 //TODO: updates player location and handles collision
-
+    jewel.update();
 }
 
 Player.prototype.render = function() {
@@ -184,18 +184,35 @@ let Jewel = function() {
     const jewelList = ['images/Gem Blue.png', 'images/Gem Green.png', 'images/Gem Orange.png'];
     this.sprite = jewelList[Math.floor(Math.random() * jewelList.length)];
 //set Jewels initial location
-    const xPos = [30, 125, 225, 325, 425];
+    const xPos = [25, 125, 225, 325, 425];
     this.x = xPos[Math.floor(Math.random() * xPos.length)];
     console.log(this.x);
-    const yPos = [110, 195, 275];
+    const yPos = [110, 195, 280];
     this.y = yPos[Math.floor(Math.random() * yPos.length)];
     console.log(this.y);
 };
 
 Jewel.prototype.update = function() {
 //TODO: updates jewels location and handles collision
+    if((this.y - 50) === player.y){
+       if((this.x - 25) === player.x){
+            scoreCount += 50;
+            score.textContent = scoreCount;
 
+        //add more points
+        //collect jewel list
+        }
+    } 
 }
+
+Jewel.prototype.delete = function(){
+    //this.sprite 
+};
+
+
+/*Jewel.prototype.jewelCollection = function(){
+    player.scoreBoard();
+}*/
 
 Jewel.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 52, 88);
