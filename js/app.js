@@ -184,19 +184,25 @@ let Jewel = function() {
     const jewelList = ['images/Gem Blue.png', 'images/Gem Green.png', 'images/Gem Orange.png'];
     this.sprite = jewelList[Math.floor(Math.random() * jewelList.length)];
 //set Jewels initial location
-    this.x = Math.floor(Math.random() * (400 - 0) + 0);
+    const xPos = [30, 125, 225, 325, 425];
+    this.x = xPos[Math.floor(Math.random() * xPos.length)];
     console.log(this.x);
-    this.y = Math.floor(Math.random() * (250 - 60) + 60);
+    const yPos = [110, 195, 275];
+    this.y = yPos[Math.floor(Math.random() * yPos.length)];
     console.log(this.y);
 };
 
-Jewel.prototype.update = function(dt) {
+Jewel.prototype.update = function() {
 //TODO: updates jewels location and handles collision
 
 }
 
 Jewel.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 52, 88);
+    ctx.shadowOffsetX = 5;
+    ctx.shadowOffsetY = 10;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = "#383b3f";
 };
 
 const jewel = new Jewel();
