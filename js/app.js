@@ -6,14 +6,9 @@ var Enemy = function() {
     this.speed = Math.floor(Math.random()*(250 - 25)+25);
 };
 
-// Update the enemy's position, required method for game
+// Update the enemy's position and runs collision function with player
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-
-//updates enemy location and handles collision with Player
     this.x += this.speed *dt;
     if(this.x > 525){
         this.x = Math.floor(Math.random()*-400);
@@ -21,7 +16,7 @@ Enemy.prototype.update = function(dt) {
     this.checkCollisions();
 };
 
-//checks collision
+//handles collision between enemy and player
 let playerCount = 3;
 Enemy.prototype.checkCollisions = function(){
     if(this.y === player.y){
@@ -35,7 +30,6 @@ Enemy.prototype.checkCollisions = function(){
             this.collisionMessage();
          if(playerCount > 0){   
             playerCount--;
-            console.log(playerCount);
             document.querySelector('li').outerHTML = "";
         } else {
             this.gameOver();
@@ -43,6 +37,14 @@ Enemy.prototype.checkCollisions = function(){
         }
     }
     }
+}
+
+Enemy.prototype.collisionMessage = function(){
+        const collisionPopover = document.querySelector('.collision-popover');
+        collisionPopover.style.display = 'inline';
+        setTimeout(function(){
+            collisionPopover.style.display = 'none';
+        }, 500)
 }
 
 Enemy.prototype.reset = function(){
@@ -55,18 +57,10 @@ Enemy.prototype.reset = function(){
          <li><i class="fas fa-female"></i></li>
          <li><i class="fas fa-female"></i></li>`
 }, 2000);
-
+    //reset jewelList
 }
 
-Enemy.prototype.collisionMessage = function(){
-        const collisionPopover = document.querySelector('.collision-popover');
-        collisionPopover.style.display = 'inline';
-        setTimeout(function(){
-            collisionPopover.style.display = 'none';
-        }, 500)
-}
-
-// Game over modal
+//Game over modal - basic modal code attributed to w3c. 
 Enemy.prototype.gameOver = function(){
     const gameOverModal = document.querySelector('#game-over-modal');
     gameOverModal.style.display = "block";
@@ -101,17 +95,18 @@ let Player = function() {
     this.y = 400; 
 };
 
-Player.prototype.update = function(dt) {
-//TODO: updates player location and handles collision
+Player.prototype.update = function() {
+//updates player location and handles jewel collection
     jewel.update();
 }
 
+//Draw the Player on the screen
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//Handle user input
 Player.prototype.handleInput = function(keyCode){
-//TODO: move to the next grid decided by user. can't go off-screen
     if (keyCode === 'left' && this.x > 0){
         this.x -= 100;
         console.log(this.x);
@@ -135,7 +130,7 @@ Player.prototype.handleInput = function(keyCode){
     }
 }
 
-//Win functionality
+//Win popover
 Player.prototype.winMessage = function(){
     const messages = ['You did it!', 'Great job!', 'Killer move!'];
     const winPopover = document.querySelector('.win-popover');
@@ -180,8 +175,8 @@ const keyPress = document.addEventListener('keydown', function(e) {
     player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
 
+const jewelList = ['images/Gem Blue.png', 'images/Gem Green.png', 'images/Gem Orange.png'];
 let Jewel = function() {
-    const jewelList = ['images/Gem Blue.png', 'images/Gem Green.png', 'images/Gem Orange.png'];
     this.sprite = jewelList[Math.floor(Math.random() * jewelList.length)];
 //set Jewels initial location
     const xPos = [25, 125, 225, 325, 425];
@@ -192,27 +187,25 @@ let Jewel = function() {
     console.log(this.y);
 };
 
+//updates jewels location and handles collision
 Jewel.prototype.update = function() {
-//TODO: updates jewels location and handles collision
     if((this.y - 50) === player.y){
        if((this.x - 25) === player.x){
-            scoreCount += 50;
+            scoreCount += 300;
             score.textContent = scoreCount;
+            jewelList.splice(this.sprite, 1);
 
+/*            if(jewelList === []){
+                alert('You collected all the jewels!');
+                scoreCount += 1000;
+                score.textContent = scoreCount;
+            }*/
         //add more points
         //collect jewel list
         }
     } 
 }
 
-Jewel.prototype.delete = function(){
-    //this.sprite 
-};
-
-
-/*Jewel.prototype.jewelCollection = function(){
-    player.scoreBoard();
-}*/
 
 Jewel.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 52, 88);
