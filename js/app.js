@@ -109,16 +109,12 @@ Player.prototype.render = function() {
 Player.prototype.handleInput = function(keyCode){
     if (keyCode === 'left' && this.x > 0){
         this.x -= 100;
-        console.log(this.x);
     } else if (keyCode === 'right' && this.x < 400){
         this.x += 100;
-        console.log(this.x);
     } else if (keyCode === 'up' && this.y > 0){
         this.y -= 85;
-        console.log(this.y);
     } else if (keyCode === 'down' && this.y < 400){
         this.y += 85;
-        console.log(this.y);
     }
     //win mode, when player reaches water, reset to initial position
     if (this.y < 0){
@@ -174,38 +170,55 @@ const keyPress = document.addEventListener('keydown', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
-
+let index;
 const jewelList = ['images/Gem Blue.png', 'images/Gem Green.png', 'images/Gem Orange.png'];
 let Jewel = function() {
-    this.sprite = jewelList[Math.floor(Math.random() * jewelList.length)];
+    this.makeJewel();
+};
+
+Jewel.prototype.makeJewel = function(){
+   this.sprite = jewelList[Math.floor(Math.random() * jewelList.length)];
 //set Jewels initial location
     const xPos = [25, 125, 225, 325, 425];
     this.x = xPos[Math.floor(Math.random() * xPos.length)];
-    console.log(this.x);
+
     const yPos = [110, 195, 280];
     this.y = yPos[Math.floor(Math.random() * yPos.length)];
-    console.log(this.y);
-};
+    
+}
 
+let firstTouch = true;
 //updates jewels location and handles collision
 Jewel.prototype.update = function() {
-    if((this.y - 50) === player.y){
-       if((this.x - 25) === player.x){
-            scoreCount += 300;
-            score.textContent = scoreCount;
-            jewelList.splice(this.sprite, 1);
+        if(firstTouch === true){
+        if((this.y - 50) === player.y){
+           if((this.x - 25) === player.x){
 
-/*            if(jewelList === []){
+//remove img & create new jewel and render??
+    this.collectJewel();
+    this.makeJewel();
+
+            if(jewelList === []){
                 alert('You collected all the jewels!');
                 scoreCount += 1000;
                 score.textContent = scoreCount;
-            }*/
-        //add more points
+            }
         //collect jewel list
+            }
         }
-    } 
-}
+    }
+    firstTouch = true;
+}     
 
+Jewel.prototype.collectJewel = function(){
+                firstTouch = false;
+                scoreCount += 300;
+                score.textContent = scoreCount;
+                index = jewelList.indexOf(this.sprite);
+                console.log(index);
+                jewelList.splice(index, 1);
+
+}
 
 Jewel.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y, 52, 88);
