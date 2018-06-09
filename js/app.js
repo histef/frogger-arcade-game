@@ -191,14 +191,14 @@ let firstTouch = true;
 //updates jewels location and handles collision
 Jewel.prototype.update = function() {
         if(firstTouch === true){
-        if((this.y - 50) === player.y){
-           if((this.x - 25) === player.x){
+            if((this.y - 50) === player.y){
+                if((this.x - 25) === player.x){
 
 //remove img & create new jewel and render??
-    this.collectJewel();
-    this.makeJewel();
+            this.collectJewel();
+            this.makeJewel();
 
-            if(jewelList === []){
+            if(jewelList.length === 0){
                 alert('You collected all the jewels!');
                 scoreCount += 1000;
                 score.textContent = scoreCount;
@@ -211,13 +211,12 @@ Jewel.prototype.update = function() {
 }     
 
 Jewel.prototype.collectJewel = function(){
-                firstTouch = false;
-                scoreCount += 300;
-                score.textContent = scoreCount;
-                index = jewelList.indexOf(this.sprite);
-                console.log(index);
-                jewelList.splice(index, 1);
-
+    firstTouch = false;
+    scoreCount += 300;
+    score.textContent = scoreCount;
+    index = jewelList.indexOf(this.sprite);
+    console.log(index);
+    jewelList.splice(index, 1);
 }
 
 Jewel.prototype.render = function() {
