@@ -170,7 +170,8 @@ const keyPress = document.addEventListener('keydown', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
-let index;
+
+
 const jewelList = ['images/Gem Blue.png', 'images/Gem Green.png', 'images/Gem Orange.png'];
 let Jewel = function() {
     this.makeJewel();
@@ -191,25 +192,30 @@ let firstTouch = true;
 //updates jewels location and handles collision
 Jewel.prototype.update = function() {
         if(firstTouch === true){
+
             if((this.y - 50) === player.y){
                 if((this.x - 25) === player.x){
 
 //remove img & create new jewel and render??
             this.collectJewel();
+                        if(jewelList.length > 0){
             this.makeJewel();
 
-            if(jewelList.length === 0){
-                alert('You collected all the jewels!');
-                scoreCount += 1000;
-                score.textContent = scoreCount;
+ 
+ /*           if(jewelList.length === 1){
+                jewelList.push('images/Gem Blue.png');
+                jewelList.x = -400;
+                jewelList.y = -400;
             }
-        //collect jewel list
+*/
+}
             }
         }
     }
     firstTouch = true;
 }     
 
+let index;
 Jewel.prototype.collectJewel = function(){
     firstTouch = false;
     scoreCount += 300;
@@ -217,6 +223,12 @@ Jewel.prototype.collectJewel = function(){
     index = jewelList.indexOf(this.sprite);
     console.log(index);
     jewelList.splice(index, 1);
+//if all three jewels collected;
+   if(jewelList.length === 0){
+    alert('You collected all the jewels!');
+    scoreCount += 1000;
+    score.textContent = scoreCount;
+}
 }
 
 Jewel.prototype.render = function() {
