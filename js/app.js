@@ -20,11 +20,11 @@ Enemy.prototype.update = function(dt) {
 let playerCount = 3;
 Enemy.prototype.checkCollisions = function(){
     if(this.y === player.y){
-        if((this.x >= -15 && this.x < 40) && player.x === 0|| 
-        (this.x > 50 && this.x < 140) && player.x === 100 ||
-        (this.x > 150 && this.x < 240) && player.x === 200 ||
-        (this.x > 250 && this.x < 340) && player.x === 300 ||
-        (this.x > 350 && this.x < 440) && player.x === 400){
+        if((this.x >= -100 && this.x < 40) && player.x === 0|| 
+        (this.x > 10 && this.x < 140) && player.x === 100 ||
+        (this.x > 110 && this.x < 250) && player.x === 200 ||
+        (this.x > 210 && this.x < 350) && player.x === 300 ||
+        (this.x > 310 && this.x < 450) && player.x === 400){
             player.x = 200;
             player.y = 400;
             this.collisionMessage();
@@ -147,7 +147,7 @@ Player.prototype.scoreBoard = function(){
 
 //Instantiate your objects.
 //Place all enemy objects in an array called allEnemies
-const enemyYPosition = [60, 60, 145, 230];
+const enemyYPosition = [60, 60, 145, 230, 230];
 const allEnemies = [];
 enemyYPosition.forEach(function(en){
     let enemy = new Enemy();
@@ -171,7 +171,6 @@ const keyPress = document.addEventListener('keydown', function(e) {
     player.handleInput(allowedKeys[e.keyCode]); //passes value to handleInput();yy
 });
 
-
 const jewelList = ['images/Gem Blue.png', 'images/Gem Green.png', 'images/Gem Orange.png'];
 let Jewel = function() {
     this.makeJewel();
@@ -185,30 +184,20 @@ Jewel.prototype.makeJewel = function(){
 
     const yPos = [110, 195, 280];
     this.y = yPos[Math.floor(Math.random() * yPos.length)];
-    
+
+
 }
 
 let firstTouch = true;
 //updates jewels location and handles collision
 Jewel.prototype.update = function() {
         if(firstTouch === true){
-
             if((this.y - 50) === player.y){
                 if((this.x - 25) === player.x){
 
-//remove img & create new jewel and render??
+//create new jewel & add points
             this.collectJewel();
-                        if(jewelList.length > 0){
             this.makeJewel();
-
- 
- /*           if(jewelList.length === 1){
-                jewelList.push('images/Gem Blue.png');
-                jewelList.x = -400;
-                jewelList.y = -400;
-            }
-*/
-}
             }
         }
     }
@@ -221,14 +210,6 @@ Jewel.prototype.collectJewel = function(){
     scoreCount += 300;
     score.textContent = scoreCount;
     index = jewelList.indexOf(this.sprite);
-    console.log(index);
-    jewelList.splice(index, 1);
-//if all three jewels collected;
-   if(jewelList.length === 0){
-    alert('You collected all the jewels!');
-    scoreCount += 1000;
-    score.textContent = scoreCount;
-}
 }
 
 Jewel.prototype.render = function() {
